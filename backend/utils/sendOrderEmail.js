@@ -255,7 +255,8 @@ const sendOrderEmail = async (email, order) => {
 
         console.log("📧 Order Email Sent");
     } catch (error) {
-        console.log(error);
+        console.error("EMAIL ERROR:", error);
+throw error;
     }
 };
 
