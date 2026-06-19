@@ -1,6 +1,13 @@
 const express = require("express");
-const cors = require("cors");
 const dotenv = require("dotenv");
+const cors = require("cors");
+
+app.use(
+  cors({
+    origin: "https://kallabowl.netlify.app",
+    credentials: true,
+  })
+);
 
 // Load env FIRST
 dotenv.config();
@@ -13,6 +20,7 @@ const reviewRoutes = require("./routes/reviewRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
+
 
 // Connect Database
 connectDB();
