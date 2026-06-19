@@ -2,16 +2,12 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 
-app.use(
-  cors({
-    origin: "https://kallabowl.netlify.app",
-    credentials: true,
-  })
-);
-
-// Load env FIRST
+// Load env first
 dotenv.config();
 
+const app = express();
+
+// Database
 const connectDB = require("./config/db");
 
 // Routes
@@ -21,30 +17,29 @@ const contactRoutes = require("./routes/contactRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 
-
 // Connect Database
 connectDB();
 
-const app = express();
-
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://kallabowl.netlify.app",
+    credentials: true,
+  })
+);
+
 app.use(express.json());
+
 // Test Route
 app.get("/", (req, res) => {
-  res.send("DOGGI API Running");
+  res.send("KALLA BOWL API Running 🚀");
 });
 
-// Product Routes
+// Routes
 app.use("/api/products", productRoutes);
-
-// Review Routes
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/contact", contactRoutes);
-
-// Order Routes
 app.use("/api/orders", orderRoutes);
-
 app.use("/api/payment", paymentRoutes);
 
 // Port
@@ -54,9 +49,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on ${PORT}`);
 });
-
-
-
-//razorpayroutingystsjem
-
-
