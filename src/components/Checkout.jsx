@@ -130,7 +130,7 @@ export default function Checkout() {
       }
 
       const paymentOrder = await axios.post(
-        "http://localhost:5000/api/payment/create-order",
+        "https://kalla-bowl.onrender.com/api/payment/create-order",
         {
           amount: total,
         }
@@ -166,7 +166,7 @@ export default function Checkout() {
             };
 
             const { data } = await axios.post(
-              "http://localhost:5000/api/orders",
+              "https://kalla-bowl.onrender.com/api/orders",
               orderData
             );
 

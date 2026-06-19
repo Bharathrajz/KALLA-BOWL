@@ -19,7 +19,7 @@ export default function Products() {
   const fetchProducts = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:5000/api/products"
+        "https://kalla-bowl.onrender.com/api/products"
       );
 
 
@@ -33,7 +33,7 @@ export default function Products() {
   const fetchReviews = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:5000/api/reviews"
+        "https://kalla-bowl.onrender.com/api/reviews"
       );
 
       setReviews(data);

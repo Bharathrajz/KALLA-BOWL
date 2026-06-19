@@ -13,7 +13,7 @@ export default function Reviews() {
   const fetchReviews = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:5000/api/reviews"
+        "https://kalla-bowl.onrender.com/api/reviews"
       );
 
       setReviewsData(data);
