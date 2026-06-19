@@ -1,7 +1,5 @@
 const Order = require("../models/Order");
-const sendOrderEmail = require(
-  "../utils/sendOrderEmail"
-);
+const sendOrderEmail = require("../utils/sendOrderEmail");
 
 const createOrder = async (req, res) => {
   try {
@@ -17,7 +15,10 @@ const createOrder = async (req, res) => {
       total,
     } = req.body;
 
-    // Basic server-side validation
+    console.log("🚀 CREATE ORDER HIT");
+    console.log("📧 Customer Email:", email);
+
+    // Validation
     if (
       !customerName ||
       !email ||
@@ -30,6 +31,8 @@ const createOrder = async (req, res) => {
       items.length === 0 ||
       !total
     ) {
+      console.log("❌ Validation Failed");
+
       return res.status(400).json({
         message: "All fields are required",
       });
@@ -46,13 +49,26 @@ const createOrder = async (req, res) => {
       items,
       total,
     });
-    await sendOrderEmail(
-      email,
-      order
-    );
+
+    console.log("✅ ORDER CREATED");
+    console.log("🆔 Order ID:", order._id);
+
+    try {
+      console.log("📨 SENDING EMAIL...");
+
+      await sendOrderEmail(email, order);
+
+      console.log("✅ EMAIL FUNCTION COMPLETED");
+    } catch (mailError) {
+      console.error("❌ EMAIL ERROR:");
+      console.error(mailError);
+    }
 
     res.status(201).json(order);
   } catch (error) {
+    console.error("❌ CREATE ORDER ERROR:");
+    console.error(error);
+
     res.status(500).json({
       message: error.message,
     });
@@ -64,6 +80,8 @@ const getOrders = async (req, res) => {
     const orders = await Order.find().sort({ createdAt: -1 });
     res.json(orders);
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({
       message: error.message,
     });
@@ -86,6 +104,8 @@ const updateOrderStatus = async (req, res) => {
 
     res.json(order);
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({
       message: error.message,
     });
@@ -106,6 +126,8 @@ const deleteOrder = async (req, res) => {
       message: "Order deleted successfully",
     });
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({
       message: error.message,
     });
